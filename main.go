@@ -25,7 +25,12 @@ type Layer struct {
 }
 
 func main() {
-	data, err := os.ReadFile("./maps/full-map-example.json")
+	if len(os.Args) < 3 {
+		fmt.Println("Usage: Tiled2Map.exe map.json output.json")
+		return
+	}
+
+	data, err := os.ReadFile(os.Args[1])
 	if err != nil {
 		log.Fatalf("Erreur lors de la lecture du fichier JSON : %v", err)
 	}
@@ -55,7 +60,7 @@ func main() {
 		return
 	}
 
-	file, err := os.Create("slices.json")
+	file, err := os.Create(os.Args[2])
 	if err != nil {
 		fmt.Println("Erreur lors de la création du fichier:", err)
 		return
